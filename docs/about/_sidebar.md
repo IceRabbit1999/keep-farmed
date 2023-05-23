@@ -1,2 +1,0 @@
-- [Education](about/edu.md)
-- [Work Experience](about/work_experience.md)
