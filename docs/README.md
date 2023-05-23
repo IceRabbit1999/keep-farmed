@@ -1,8 +1,7 @@
 # Keep Farmed and Carry on
 
-> IceRabbit
+> Hand of Midas: Preserved through unknown magical means, the Hand of Midas is a weapon of greed, sacrificing animals to line the owner's pockets.
 
-**Clarity**: *Clear water that enhances the ability to meditate.*
 
-Long may the clarity shine
+Long may the sun shine
 
