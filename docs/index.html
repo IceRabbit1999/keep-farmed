@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Keep Farmed</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<!--    <link rel="icon" href="clarity_icon.ico" type="image/x-icon">-->
+    <!--    <link rel="icon" href="clarity_icon.ico" type="image/x-icon">-->
     <meta name="description" content="Description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
@@ -12,164 +12,164 @@
     <link rel="stylesheet" href="https://unpkg.com/docsify-toc@1.0.0/dist/toc.css">
     <!--twemoji -->
     <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css"/>
 
 </head>
 <body>
 <div id="app" class="font"></div>
-<div id="backToTop" >
+<div id="backToTop">
 
 </div>
-    <script>
-        window.$docsify = {
-            name: 'Keep Farmed',
-            repo: 'https://github.com/IceRabbit1999/keep-farmed',
-            loadSidebar: true,
-            routerMode: 'history',
-            coverpage: true,
-            onlyCover: true,
-            alias: {
+<script>
+    window.$docsify = {
+        name: 'Keep Farmed',
+        repo: 'https://github.com/IceRabbit1999/keep-farmed',
+        loadSidebar: true,
+        routerMode: 'history',
+        coverpage: true,
+        loadNavbar: true,
+        alias: {},
+        subMaxLevel: 6,
+        timeUpdater: {
+            text: ">Last update time: {docsify-updated}",
+            formatUpdated: "{YYYY}/{MM}/{DD} {HH}:{mm}:{ss}",
+            whereToPlace: "bottom",  // "top" or "bottom", default to "bottom"
+        },
+        toc: {
+            scope: '.markdown-section',
+            headings: 'h1, h2, h3, h4, h5, h6',
+            title: 'Table of Contents',
+        },
+        search: {
+            paths: 'auto',
+            placeholder: 'Search',
+            noData: 'No Results',
+            depth: 6,
+        },
+        count: {
+            countable: true,
+            fontsize: '0.9em',
+            color: 'rgb(90,90,90)',
+            language: 'english'
+        },
+        pagination: {
+            previousText: 'Previous',
+            nextText: 'Next',
+            crossChapter: true,
+            crossChapterText: true,
+        },
+        autoFooter: {
+            name: 'IceRabbit',           // 公司显示名称（必填）
+            copyYear: new Date().getFullYear(),              // 开始版权年份（必填）
+            url: 'https://github.com/IceRabbit1999',           // 公司网址（可选）
+            policy: false,    // 显示隐私政策（可选）
+            terms: false,    // 显示服务条款（可选）
+            cookies: false,    // 显示 Cookies 政策（可选）
+            onBody: true              // 如果为真，则显示在主文档中
+        },
+        progress: {
+            position: "bottom",
+            color: "var(--theme-color,#42b983)",
+            height: "10px",
+        },
+        plugins: [
+            function (hook) {
+                hook.doneEach(function () {
+                    // Invoked each time after the data is fully loaded, no arguments,
+                    // ...
+                    twemoji.parse(document);
+                })
+                let fullYear = ' ' + new Date().getFullYear()
+                var footer = [
+                    '<footer>',
+                    '<span>&copy;</span>',
+                    fullYear,
+                    '<span>&nbsp &nbsp Powered by <a href=https://github.com/IceRabbit1999 >IceRabbit</a> and <a href=https://docsify.js.org/#/ >docsify</a></span>',
+                    '</footer>'
+                ].join('');
 
-            },
-            subMaxLevel: 6,
-            timeUpdater: {
-                text: ">Last update time: {docsify-updated}",
-                formatUpdated: "{YYYY}/{MM}/{DD} {HH}:{mm}:{ss}",
-                whereToPlace: "bottom",  // "top" or "bottom", default to "bottom"
-            },
-            toc: {
-                scope: '.markdown-section',
-                headings: 'h1, h2, h3, h4, h5, h6',
-                title: 'Table of Contents',
-            },
-            search: {
-                paths: 'auto',
-                placeholder: 'Search',
-                noData: 'No Results',
-                depth: 6,
-            },
-            count: {
-                countable: true,
-                fontsize: '0.9em',
-                color: 'rgb(90,90,90)',
-                language: 'english'
-            },
-            pagination: {
-                previousText: 'Previous',
-                nextText: 'Next',
-                crossChapter: true,
-                crossChapterText: true,
-            },
-            autoFooter: {
-                name: 'IceRabbit',           // 公司显示名称（必填）
-                copyYear: new Date().getFullYear(),              // 开始版权年份（必填）
-                url: 'https://github.com/IceRabbit1999',           // 公司网址（可选）
-                policy: false,    // 显示隐私政策（可选）
-                terms: false,    // 显示服务条款（可选）
-                cookies: false,    // 显示 Cookies 政策（可选）
-                onBody: true              // 如果为真，则显示在主文档中
-            },
-            progress: {
-                position: "bottom",
-                color: "var(--theme-color,#42b983)",
-                height: "10px",
-            },
-            plugins: [
-                function (hook) {
-                    hook.doneEach(function () {
-                        // Invoked each time after the data is fully loaded, no arguments,
-                        // ...
-                        twemoji.parse(document);
-                    })
-                    let fullYear = ' ' +  new Date().getFullYear()
-                    var footer = [
-                        '<footer>',
-                        '<span>&copy;</span>',
-                        fullYear,
-                        '<span>&nbsp &nbsp Powered by <a href=https://github.com/IceRabbit1999 >IceRabbit</a> and <a href=https://docsify.js.org/#/ >docsify</a></span>',
-                        '</footer>'
-                    ].join('');
+                hook.afterEach(function (html) {
+                    return html + footer;
+                });
+            }
+        ]
 
-                    hook.afterEach(function(html) {
-                        return html + footer;
-                    });
-                }
-            ]
-
-        }
-    </script>
-    <!-- Docsify v4 -->
-    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-    <!--全文搜索-->
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-    <!--字数统计-->
-    <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
-    <!--复制到剪贴板-->
-    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-    <!--代码高亮-->
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.22.0/components/prism-rust.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.22.0/components/prism-java.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.22.0/components/prism-bash.min.js"></script>
-    <!--底部分页-->
-    <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
-    <!--footer-->
-    <script src="https://unpkg.com/@markbattistella/docsify-sidebarfooter@latest"></script>
-    <!--阅读进度条-->
-    <script src="https://cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>
-    <!--jquery-->
-    <script src="http://cdn.staticfile.org/jquery/1.11.1-rc2/jquery.min.js"></script>
-    <!--toc-->
-    <script src="https://unpkg.com/docsify-toc@1.0.0/dist/toc.js"></script>
-    <!--last update-->
-    <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.min.js"></script>
-    <!--sidebar collapse-->
-    <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+    }
+</script>
+<!-- Docsify v4 -->
+<script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+<!--全文搜索-->
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+<!--字数统计-->
+<script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+<!--复制到剪贴板-->
+<script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+<!--代码高亮-->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.22.0/components/prism-rust.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.22.0/components/prism-java.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.22.0/components/prism-bash.min.js"></script>
+<!--底部分页-->
+<script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+<!--footer-->
+<script src="https://unpkg.com/@markbattistella/docsify-sidebarfooter@latest"></script>
+<!--阅读进度条-->
+<script src="https://cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>
+<!--jquery-->
+<script src="http://cdn.staticfile.org/jquery/1.11.1-rc2/jquery.min.js"></script>
+<!--toc-->
+<script src="https://unpkg.com/docsify-toc@1.0.0/dist/toc.js"></script>
+<!--last update-->
+<script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.min.js"></script>
+<!--sidebar collapse-->
+<script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 
 <script>
-  $(function(){
+    $(function () {
 
-    $(window).scroll(function(){  //只要窗口滚动,就触发下面代码
+        $(window).scroll(function () {  //只要窗口滚动,就触发下面代码
 
-      // var scrollt = document.documentElement.scrollTop + document.body.scrollTop; //获取滚动后的高度
-      var scrollPercent = 100 * $(window).scrollTop() / ($(document).height() - $(window).height());
+            // var scrollt = document.documentElement.scrollTop + document.body.scrollTop; //获取滚动后的高度
+            var scrollPercent = 100 * $(window).scrollTop() / ($(document).height() - $(window).height());
 
-      if(  scrollPercent > 1){  //判断滚动后高度超过200px,就显示
+            if (scrollPercent > 1) {  //判断滚动后高度超过200px,就显示
 
-        $("#backToTop").fadeIn(400); //淡入
+                $("#backToTop").fadeIn(400); //淡入
 
-          document.getElementById('backToTop').innerHTML=Math.round(scrollPercent) + '%';
+                document.getElementById('backToTop').innerHTML = Math.round(scrollPercent) + '%';
 
-      }else{
+            } else {
 
-        $("#backToTop").stop().fadeOut(400); //如果返回或者没有超过,就淡出.必须加上stop()停止之前动画,否则会出现闪动
+                $("#backToTop").stop().fadeOut(400); //如果返回或者没有超过,就淡出.必须加上stop()停止之前动画,否则会出现闪动
 
-      }
+            }
+
+        });
+
+        $("#backToTop").click(function () { //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
+
+            $("html,body").animate({scrollTop: "0px"}, 618);
+
+        });
 
     });
-
-    $("#backToTop").click(function(){ //当点击标签的时候,使用animate在200毫秒的时间内,滚到顶部
-
-      $("html,body").animate({scrollTop:"0px"},618);
-
-    });
-
-  });
 </script>
 </body>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap');
+
     body {
         font-family: 'Merriweather Sans', sans-serif;
         font-size: large;
 
-        background: #E0EAFC;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);  /* Chrome 10-25, Safari 5.1-6 */
+        background: #E0EAFC; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
-    .sidebar{
-        background: #ECE9E6;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
+
+    .sidebar {
+        background: #ECE9E6; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
 
@@ -208,7 +208,6 @@
         border-radius: 0;
         background: #ffffff;
     }
-
 
 
 </style>
