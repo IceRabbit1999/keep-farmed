@@ -6,9 +6,9 @@
 
 ## Work Experience
 
-### FangXin
-
 ### China Mobile Internet
+
+### FangXin
 
 ## Projects
 
