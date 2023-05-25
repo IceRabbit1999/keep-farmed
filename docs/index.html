@@ -9,10 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
     <!--toc-->
-    <link rel="stylesheet" href="https://unpkg.com/docsify-toc@1.0.0/dist/toc.css">
+    <link rel="stylesheet" href="https://unpkg.com/docsify-plugin-toc@1.3.1/dist/light.css">
     <!--twemoji -->
     <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css"/>
 
 </head>
 <body>
@@ -28,7 +27,9 @@
         routerMode: 'history',
         coverpage: true,
         loadNavbar: true,
-        alias: {},
+        alias: {
+            '/.*/_navbar.md': '/_navbar.md'
+        },
         subMaxLevel: 6,
         timeUpdater: {
             text: ">Last update time: {docsify-updated}",
@@ -36,9 +37,9 @@
             whereToPlace: "bottom",  // "top" or "bottom", default to "bottom"
         },
         toc: {
-            scope: '.markdown-section',
-            headings: 'h1, h2, h3, h4, h5, h6',
-            title: 'Table of Contents',
+            tocMaxLevel: 6,
+            target: 'h1, h2, h3, h4, h5, h6',
+            ignoreHeaders:  ['<!-- {docsify-ignore} -->', '<!-- {docsify-ignore-all} -->']
         },
         search: {
             paths: 'auto',
@@ -117,7 +118,7 @@
 <!--jquery-->
 <script src="http://cdn.staticfile.org/jquery/1.11.1-rc2/jquery.min.js"></script>
 <!--toc-->
-<script src="https://unpkg.com/docsify-toc@1.0.0/dist/toc.js"></script>
+<script src="https://unpkg.com/docsify-plugin-toc@1.3.1/dist/docsify-plugin-toc.min.js"></script>
 <!--last update-->
 <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.min.js"></script>
 <!--sidebar collapse-->
