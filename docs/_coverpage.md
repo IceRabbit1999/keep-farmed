@@ -1,6 +1,6 @@
 # Keep Farmed
 
->The hand of Midas in those moments when you have to light a cigarette
+>Regain lost courage
 
 Things can always go against your wishes, so just keep farming
 
