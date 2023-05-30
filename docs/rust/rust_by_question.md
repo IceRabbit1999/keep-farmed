@@ -87,3 +87,8 @@ The Drop trait provides a way to run some code when a value goes out of scope.
   - Rust does not allow you to reimplement Copy, but you may reimplement Clone and run arbitrary code.
 
 ### Any
+A trait to emulate dynamic typing(The opposite of static typing)
+- use cases? [Source](https://www.reddit.com/r/rust/comments/j770uf/what_use_cases_are_there_for_the_any_trait/)
+  - New Rust Programmer: use Any because it allows them to pretend that Rust supports dynamic typing.
+  - Intermediate Rust programmer: avoid Any because they know it leads to problems when abused.
+  - Advanced Rust programmer: use Any because it lets them create awesome type-safe interfaces that bend the rules of what static type systems can achieve
