@@ -1,0 +1,31 @@
+name: docsify deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v3
+    -
+      name: Fix update time
+      run: git ls-files | while read file; do touch -d $(git log -1 --format="@%ct" "$file") "$file"; done
+    -
+      name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: ./docs
+        name: github-pages
+        retention-days: 1
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: deploy
+      uses: actions/deploy-pages@v2
