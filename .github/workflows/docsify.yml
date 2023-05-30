@@ -24,6 +24,10 @@ jobs:
         name: github-pages
         retention-days: 1
   deploy:
+    permissions:
+      pages: write
+      id-token: write
+      
     runs-on: ubuntu-latest
     steps:
     -
