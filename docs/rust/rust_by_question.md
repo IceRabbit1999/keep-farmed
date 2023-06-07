@@ -13,7 +13,7 @@ Documenting the annoying problems in learning rust, and convincing people I'm go
     + Example: ownership and borrowing -> memory safety without gc
 
 
-## Make the borrower checker happy :)
+## Make the borrower checker happy :wink:
 
 ## In Books
 
@@ -92,3 +92,24 @@ A trait to emulate dynamic typing(The opposite of static typing)
   - New Rust Programmer: use Any because it allows them to pretend that Rust supports dynamic typing.
   - Intermediate Rust programmer: avoid Any because they know it leads to problems when abused.
   - Advanced Rust programmer: use Any because it lets them create awesome type-safe interfaces that bend the rules of what static type systems can achieve
+
+### Send/Sync
+Send: ownership of values of the type implementing Send can be transferred between threads
+
+Sync: it is safe for the type implementing Sync to be referenced from multiple threads
+- define [Source](https://doc.rust-lang.org/nomicon/send-and-sync.html#send-and-sync)
+  - A type is Send if it is safe to send it to another thread.
+  - A type is Sync if it is safe to share between threads (T is Sync if and only if &T is Send).
+- Major exceptions include:
+  - raw pointers are neither Send nor Sync (because they have no safety guards).
+  - UnsafeCell isn't Sync (and therefore Cell and RefCell aren't).
+  - Rc isn't Send or Sync (because the refcount is shared and unsynchronized).
+- use cases [Source](https://www.zhihu.com/question/303273488)
+  - Send but not Sync: 编译期保证无法用于多线程share data的场景, 实现了Send可以把所有权move到另一个线程独占使用
+  - Sync but not Send: MutexGuard
+- difference and commonality [Source1](https://www.zhihu.com/question/303273488) [Source2](https://huonw.github.io/blog/2015/02/some-notes-on-send-and-sync/)
+  - Send表示跨线程move, Sync表示跨线程share data，基本是ownership和borrower的区别
+  - 对于复合类型当且仅当所有成员都是Send/Sync时，这个类型才是Send/Sync
+  - Sync is related to how a type works when shared across multiple threads at once, and Send talks about how a type behaves as it crosses a task boundary
+  - Sync + Copy => Send: if a type T implements both Sync and Copy, then it can also implement Send (conversely, a type is only allowed to be both Sync and Copy if it is also Send).
+  - &mut T: Send when T: Send
