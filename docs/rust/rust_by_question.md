@@ -113,3 +113,15 @@ Sync: it is safe for the type implementing Sync to be referenced from multiple t
   - Sync is related to how a type works when shared across multiple threads at once, and Send talks about how a type behaves as it crosses a task boundary
   - Sync + Copy => Send: if a type T implements both Sync and Copy, then it can also implement Send (conversely, a type is only allowed to be both Sync and Copy if it is also Send).
   - &mut T: Send when T: Send
+
+### Fn/FnOnce/FnMut
+Fn: A closure which has an immutable context belongs to Fn (&self)
+
+FnMut: A closure which has a mutable context belongs to FnMut (&mut self)
+
+FnOnce: A closure that owns its context belongs to FnOnce (self)
+
+- relationship [Source](https://stackoverflow.com/questions/30177395/when-does-a-closure-implement-fn-fnmut-and-fnonce)
+  - Closures will implement them automatically if it seems to be needed
+  - All closures implement FnOnce
+
