@@ -22,7 +22,36 @@ Documenting the annoying problems in learning rust, and convincing people I'm go
     + Sounds like something ownership/borrower checker does
 2. `gdb/lldb`, `valgrind`, `massif`
 
-## For Interview
+## Theoretical
+
+### Rust主要特性
+[Source](https://www.youtube.com/watch?v=njle3PQIwUg)
+- 内存安全
+  - 所有权是什么？为什么重要？借用是什么？有什么作用？
+  - 生命周期是什么？有什么作用？
+- 并发性
+- 零成本抽象
+- 零开销异常处理
+- 模式匹配和函数式编程
+
+### 经典面试题
+[Source](https://rustcc.cn/article?id=0b0afa3e-db03-428e-9fc5-b06347997d41)
+- RwLock<T>对想要在多线程下正确使用，T的约束是？
+  - The type parameter T represents the data that this lock protects. It is required that T satisfies Send to be shared across threads and Sync to allow concurrent access through readers
+- 下面代码能否通过编译？为什么？
+```rust
+trait A{ fn foo(&self) -> Self; }
+Box<Vec<dyn A>>;
+//不可以
+```
+- `Clone`和`Copy`的区别
+  - Copy是marker trait，告诉编译器需要move的时候copy。Clone表示拷贝语义，有函数体。不正确的实现Clone可能会导致Copy出BUG
+- `deref`的被调用过程？
+  - Deref 是一个trait，由于rust在调用的时候会自动加入正确数量的 * 表示解引用。则，即使你不加入*也能调用到Deref
+- Rust里如何实现在函数入口和出口自动打印一行日志？
+  - 调用处宏调用、声明时用宏声明包裹、proc_macro包裹函数、邪道一点用compiler plugin、llvm插桩等形式进行
+- `Box<dyn (Fn() + Send +'static)>`是什么意思?
+  - 一个可以被Send到其他线程里的没有参数和返回值的callable对象，即 Closure，同时是 ownershiped，带有static的生命周期，也就说明没有对上下文的引用
 
 ### Box
 A data type that allows you to store a value on the heap
