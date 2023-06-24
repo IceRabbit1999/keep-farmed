@@ -46,6 +46,8 @@ Box<Vec<dyn A>>;
 ```
 - `Clone`和`Copy`的区别
   - Copy是marker trait，告诉编译器需要move的时候copy。Clone表示拷贝语义，有函数体。不正确的实现Clone可能会导致Copy出BUG
+  - Copy is implicit and an inexpensive bit-wise copy, while Clone is always explicit and may or may not be expensive
+  - Rust does not allow you to reimplement Copy
 - `deref`的被调用过程？
   - Deref 是一个trait，由于rust在调用的时候会自动加入正确数量的 * 表示解引用。则，即使你不加入*也能调用到Deref
 - Rust里如何实现在函数入口和出口自动打印一行日志？

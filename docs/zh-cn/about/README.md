@@ -44,11 +44,16 @@ sipmvc是仿照mvc架构的自研sip框架，目的是简化信令服务器开�
 - 技术栈：jsip/spring mvc
 - 实际应用：用于演示demo的快速开发，上线小型业务
 
-### Rust
-一些工具项目
+### Rust/Blockchain
+一些Rust工具项目
 - 自动周报收集
 - Excel数据处理
 - 微信bot
+
+区块链
+- 区块链技术基础
+- Substrate基础
+- Nervos基础
 
 ## 方欣科技
 - 工作岗位：Java开发实习

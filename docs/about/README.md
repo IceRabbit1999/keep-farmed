@@ -1,5 +1,3 @@
->Currently looking for a job as a rust developer(remote/guangzhou)
-
 # About Me
 - Jiang Zihao/1999
 - Contact:
@@ -34,7 +32,7 @@ The OAM Operations and Maintenance Website is primarily used internally within t
 - Main Responsibilities: Front-end development and partial back-end development.
 - Technology Stack:
   - Front-end: Vue2, Vuetify, GoJS, Ant Design X6.
-  - Back-end: Spring Boot, MongoDB.
+  - Back-end: SpringBoot, MongoDB.
 - Practical Application: Configuration of signaling timing diagrams, media process diagrams, and CRUD operations for virtual numbers.
 
 ### SIP MVC
@@ -50,11 +48,16 @@ Various tool projects:
 - Excel data processing.
 - WeChat bot.
 
+Blockchain
+- Basic blockchain
+- Basic substrate
+- Basic nervos and ckb
+
 ## FangXin Technology
 - Position: Java Development Intern
-- Main Responsibilities: Participated in the development of intelligent form filling using a self-developed framework based on Spring Boot.
+- Main Responsibilities: Participated in the development of intelligent form filling using a self-developed framework based on SpringBoot.
 
-## Additional Skills
+# Additional Skills
 - English Reading and Comprehension:
   - CET-6 520+
   - Experience working in an all-English work environment.
