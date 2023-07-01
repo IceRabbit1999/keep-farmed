@@ -26,7 +26,7 @@ The Proxy server serves as a relay station for signaling, receiving signals from
   - Designed a versatile and scalable routing and dispatch system, including load balancing and health checking functionalities.
 - Practical Application: The Proxy server handles multiple online businesses and serves as the team's traffic entry point.
 
-### OAM Operations and Maintenance Website
+### Operations and Maintenance Website
 The OAM Operations and Maintenance Website is primarily used internally within the team and aims to webify and automate the operations and maintenance work.
 
 - Main Responsibilities: Front-end development and partial back-end development.

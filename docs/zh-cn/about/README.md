@@ -53,7 +53,6 @@ sipmvc是仿照mvc架构的自研sip框架，目的是简化信令服务器开�
 区块链
 - 区块链技术基础
 - Substrate基础
-- Nervos基础
 
 ## 方欣科技
 - 工作岗位：Java开发实习
