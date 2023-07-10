@@ -86,6 +86,10 @@ fn clone(&self) -> Rc<T> {
 }
 ```
 Rc’s clone doesn’t copy the actual data, it just adds a reference count.
+- usage
+  - 多线程共享所有权
+  - GUI编程
+  - 递归数据结构：图、树
 
 ### Cell/RefCell
 Both provide `Interior Mutability`: where you can modify the value stored in cell via immutable reference of the cell.

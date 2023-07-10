@@ -1,2 +1,1 @@
-- [About Me](rust/README.md)
-- [Prepare For Interview](about/prepare_for_interview.md)
+- [About Me](about/README.md)

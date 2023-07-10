@@ -155,4 +155,22 @@ for (int i = 0; i < fragmentCount; i++) {
 
 
 # Rust
-Bevy, Axum
+1. Bevy, Axum
+
+Axum is the Bevy of web frameworks. [Source](https://www.reddit.com/r/rust/comments/12n1vdc/rust_axum_full_course_web_development/)
+
+- In Bevy, you use/define Components and Resources (the parts) that you can ingest in your System functions (the "processors").
+
+- In Axum, you use/define Extractors and States (the parts) that you can ingest in your Handlers/Middleware (the "processors").
+
+# 其他
+
+0. 自我介绍
+    1. 面试官好，我是姜子豪，今年24岁，中山大学电信院2021级本科毕业生，目前就职于中移互联网，岗位是后端研发，在组内的定位是一名运维开发。
+    2. 开发方面我主要负责信令侧组件开发和运维网站的搭建，信令侧开发包括proxy代理服务器、as应用服务器，运维网站是面向团队内部使用的web服务
+    3. 运维方面主要负责三个部分，一个是运维、监控体系的中间件搭建和告警配置，一个是自动化运维的部署实现，负责维护团队内go组件、c++组件和java组件的docker编译/打包环境，结合jenkins+ansible实现自动部署，最后是负责主机和各种第三方组件的漏洞修复
+
+
+1. 项目：实现方法 -> 寻找你项目的问题 -> 未解决的问题，是否有方案？
+2. 近期有没有遇到什么挑战？
+   - sipmvc可配置化的实现：原有jsip框架处理消息实际上是同步的，希望改为异步。比如routine A收到信令后发消息给routine B，要求routine B处理完该消息后通知routine A，A才释放该信令。B收到A发来的消息应该由线程池（sipmvc自己创建的）分配线程并执行routine B（由消息唤醒而非信令）处理消息
