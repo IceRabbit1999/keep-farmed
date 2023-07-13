@@ -1,5 +1,52 @@
 Interview preparation for [About Me](about/README.md)
 
+# 复盘
+
+## 20230710 APITable
+1. 写一个函数，该函数接收一个字符串，将该字符串中连续的空格合并为一个，并返回新的字符串
+```rust
+fn merge_spaces(input: &str) -> String {
+    let mut res = String::new();
+    let mut prev_char: Option<char> = None;
+
+    for ch in input.chars() {
+        match (prev_char, ch) {
+            (Some(prev), ' ') if prev == ' ' => continue,
+            _ => res.push(ch),
+        }
+        prev_char = Some(ch);
+    }
+    res
+}
+```
+上为正解，当时只想到粗暴的for循环 + count计数，还是不够rusty,想不到从match, (a, b)入手
+
+2. `trait Iterator`的定义，以及用rust写一个函数，该函数返回一个迭代器，该迭代器返回斐波那契数列
+```rust
+fn fib() -> Box<dyn Iterator<Item = u64>> {
+    let mut current = 0;
+    let mut next = 1;
+    Box::new(
+        std::iter::from_fn(move || {
+            let new_next = current + next;
+            let new_current = std::mem::replace(&mut next, new_next);
+            current = new_current;
+            Some(new_current)
+        })
+    )
+}
+```
+看得出来想问的是`trait object`，所以就往这个方向答了，但不通过具体一个`struct`去`impl`要用到`std::iter::from_fn(f: F) -> FromFn<F> where F: FnMut() -> Option<T>`，之前没用过。没有具体实现，讲了一下思路，问除了u64还有什么限制，没想到
+
+3. Java问的比较简单，可能不太了解信令侧的东西。
+   1. 为什么用netty？因为希望是无状态的服务器，不需要很复杂的实现，只想要一个简单的框架帮助构建好channel通道（瞎扯）
+   2. 为什么要用springboot启动？需要提供一些http接口对外
+   3. 自动化运维指什么？jenkins + ansible等
+4. 最后问了最近有什么挑战
+5. 日常反问：问了rust将来是否会换掉java
+
+其实问的都不难，但还是没答好。面试之前要填问卷，拉代码本地部署，成本还是有点高的
+
 # 开发
 
 ## Proxy
