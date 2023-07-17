@@ -223,3 +223,25 @@ Axum is the Bevy of web frameworks. [Source](https://www.reddit.com/r/rust/comme
 1. 项目：实现方法 -> 寻找你项目的问题 -> 未解决的问题，是否有方案？
 2. 近期有没有遇到什么挑战？
    - sipmvc可配置化的实现：原有jsip框架处理消息实际上是同步的，希望改为异步。比如routine A收到信令后发消息给routine B，要求routine B处理完该消息后通知routine A，A才释放该信令。B收到A发来的消息应该由线程池（sipmvc自己创建的）分配线程并执行routine B（由消息唤醒而非信令）处理消息
+
+# APITable二面(boss)
+databus定位是数据组件
+
+1. DataBus definition: DataBus提供了一种解耦的方式，使得不同的组件可以独立开发、部署和扩展，同时能够通过数据总线进行数据交换。它可以处理不同组件之间的异步通信，从而提高系统的可伸缩性和可靠性。
+2. OT: Operational Transformation, 是一种用于实现实时协同编辑的算法。它旨在解决多个用户并发编辑同一文档时可能发生的冲突和不一致性问题
+   1. 转换函数：每个操作都有一个相应的转换函数。转换函数根据操作的作用位置和其他操作的状态，将一个操作转换为另一个操作。这是为了确保在并发编辑时，操作可以以一致的方式应用于文档。
+   2. 转换过程：当两个或多个用户同时编辑同一文档时，他们的操作可能会冲突。为了解决冲突，OT算法将每个用户的操作转换为其他用户的操作。这个转换过程包括应用操作、转换操作和发送操作。
+3. Why DataBus in rust?
+   1. DataBus是AI的关键构成
+   2. 实时的协同数据流太分散和凌乱，导致迭代功能困难
+   3. 消除重复代码
+   4. rust的性能优势
+4. DataBus分层
+   1. Application
+   2. BO(Business logic)/DataObjectManager: 面向对象的方式抽象封装space, DataSheet, View...
+   3. Facades: 各种语言的Binding
+   4. SO(Domain logic)/DataFunctionManager, 纯函数
+   5. DAO, 持久化层
+   6. OT
+   7. Shared：工具类
+5. 处理数据流，向上提供bindings以及各种接口（较高层级的抽象和封装，屏蔽掉复杂的协作流程），向下处理DAO和OT
