@@ -13,7 +13,7 @@ Documenting the annoying problems in learning rust, and convincing people I'm go
     + Example: ownership and borrowing -> memory safety without gc
 
 
-## Make the borrower checker happy :wink:
+## Make the borrower checker happy 😉
 
 ## In Books
 
