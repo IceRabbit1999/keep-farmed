@@ -268,4 +268,44 @@ databus定位是数据组件
    9. AUFS：联合文件系统，Docker会通过联合的方式组装镜像层，所有镜像层只读，只有最顶层可以被用户读写
 2. linux/network programming
 3. tcp/ip
-4. 
+   
+# 美的
+1. netty/tokio/async
+   1. why sync?
+      - 线程开销大：切换耗时，包括内核调度开销，污染cpu的cache
+      - 线程保留的栈占空间
+   2. 分类
+      - 提供future，有回调地域问题，开发成本和维护成本提高，所以会套一层async/await,上层同步，底层异步
+      - CSP,协程，sackful,有一定开销，且语言写死无法更改
+   3. netty
+      - 以io resource为入口，而不是task
+      - 所有的读写都是别人回调你，而不是你主动主动调用
+      - 使用NIO和多线程
+      - pipeline并不适合所用场景
+   4. tokio
+      - async/await：表面同步内在异步，减少回调地狱的问题
+      - 以task为单位，tokio::spawn是轻量级线程（green thread）
+
+2. Java21
+   1. Virtual Threads
+   2. Sequenced Collection
+   3. 解构
+   4. switch增强
+   5. 分代式ZGC Generational ZGC
+   6. `_`表示未命名变量
+   7. JDK Foreign Function
+
+3. ZGC
+   - 特点和优势
+     1. 停顿时间短
+     2. 并发收集
+     3. 大堆支持
+     4. 高吞吐量
+     5. 自适应
+   - 核心原理
+     - 通过并发执行垃圾回收操作来减少STW时间
+     - 并发的标记整理: 并发意味着GC线程和应用线程都在不停的访问对象，这可能导致对象发生转移以后地址未更新，应用线程访问到旧地址。在ZGC中应用线程访问对象会触发“读屏障”，会把读出来的地址更新到新地址，JVM通过着色指针来判断对象被移动过
+   - 触发机制：
+     - 基于分配速率的自适应算法，ZGC根据近期对象分配速率以及GC时间计算当内存占用到达什么阈值时触发下一次GC
+     - 基于固定时间间隔
+     - 外部触发（`System.gc()`）
