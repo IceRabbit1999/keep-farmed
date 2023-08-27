@@ -1,3 +1,12 @@
+# Crust of Rust
+## [Smart Pointers and Interior Mutability](https://www.youtube.com/watch?v=8O0Nt9qY_vo)
+### Cell
+- `Cell` type allows you to modify a value through a shared reference because:
+  -  no other threads have reference to it(`!Sync`)
+  -  you've never given out a reference into the value you store(return a `Copy` not a reference)
+
+### RefCell
+
 # Lifetime
 
 1. from [Common Rust Lifetime Misconceptions](https://github.com/pretzelhammer/rust-blog/blob/master/posts/common-rust-lifetime-misconceptions.md)
@@ -24,3 +33,11 @@
   3. `end`
 - self-describe type
 - serde is not a parsing library, it just provide a connection
+
+## [Rayon: Data Parallelism](https://www.youtube.com/watch?v=gof_OEv71Aw)
+- Parallel iterators
+  - closures cannot mutate shared state
+  - some operations are different(fold, find)
+- rayon::join()
+  - add `join` wherever parallelism is possible
+  - let the library decide when it is profitable(how many threads to use)
