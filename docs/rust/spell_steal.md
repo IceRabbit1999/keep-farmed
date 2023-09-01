@@ -7,6 +7,96 @@
 
 ### RefCell
 
+## [Send, Sync and their implementors](https://www.youtube.com/watch?v=yOezcP-XaIw&list=PLqbS7AVVErFiWDOAVrPt7aYmnuuOLYvOa&index=14)
+
+# Framework
+
+## [Dependency Injection In Axum](https://tulipemoutarde.be/posts/2023-08-20-depencency-injection-rust-axum/)
+### static dispatch
+```rust
+pub trait AppState: Clone + Send + Sync + 'static {
+  type D: database::DB;
+
+  fn db(&self) -> &Self::D;
+  fn templates(&self) -> &Handlerbars<'static>;
+}
+
+#[derive(Clone)]
+pub struct RegularAppState {
+  pub templates: Handlerbars<'static>,
+  pub db: MemoryDB,
+}
+
+impl AppState for RegularAppState {
+  type D = MemoryDB;
+  
+  fn db(&self) -> Self::D {
+    &self.db
+  }
+
+  fn templates(&self) -> &Handlerbars<'static> {
+    &self.templates
+  }
+}
+```
+
+```rust
+pub fn build_router() -> Router {
+  let state = RegularAppState {
+    templates: build_templates(),
+    db: MemoryDB::new(),
+  };
+  build(state)
+}
+
+fn build<A: AppState(state: A) -> Router {
+  Router::new()
+    .route("/", get(handlers::index::<A>))
+    .route("/item/:id", get(handlers::show::<A>))
+    .with_state(state)
+}
+```
+```rust
+pub async fn index<A: AppState>(State(state): State<S>) {
+  
+}
+
+pub async fn show<S: AppState>(Path(id): Path<Uuid>, State(state): State<S>) -> Html<'static> {
+
+}
+```
+Two drawbacks:
+- Every combination of dependencies need a new struct that implements `AppState`
+- No way to directly match again the actual fields in the handler definition
+### dynamic dispatch
+```rust
+#[derive(Clone)]
+pub struct AppState {
+  pub templates: Handlerbars<'static>,
+  pub db: Arc<dyn DB + Send + Sync>,
+}
+
+pub fn build_router() -> Router {
+  let state = AppState {
+    templates: build_templates(),
+    db: Arc::new(MemoryDB::new()),
+  };
+
+  Router::new()
+    .route("/", get(handlers::index))
+    .route("/item/:id", get(handlers::show))
+    .with_state(state)
+}
+```
+
+```rust
+pub async fn index(State(AppState {db, templates}): State<AppState>) -> Html<String> {
+
+}
+
+pub async fn show(Path(id): Path<Uuid>, State(AppState {db, templates}): State<AppState>) -> Html<String> {}
+```
+
 # Lifetime
 
 1. from [Common Rust Lifetime Misconceptions](https://github.com/pretzelhammer/rust-blog/blob/master/posts/common-rust-lifetime-misconceptions.md)
