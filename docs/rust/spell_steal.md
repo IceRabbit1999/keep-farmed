@@ -9,6 +9,10 @@
 
 ## [Send, Sync and their implementors](https://www.youtube.com/watch?v=yOezcP-XaIw&list=PLqbS7AVVErFiWDOAVrPt7aYmnuuOLYvOa&index=14)
 
+# Lifetime
+
+- [Understanding Lifetime in Rust](https://mobiarch.wordpress.com/2015/06/29/understanding-lifetime-in-rust-part-i/)
+  - Lifetime solved two nagging problems: Memory management and Race condition
 # Framework
 
 ## [Dependency Injection In Axum](https://tulipemoutarde.be/posts/2023-08-20-depencency-injection-rust-axum/)
@@ -96,8 +100,6 @@ pub async fn index(State(AppState {db, templates}): State<AppState>) -> Html<Str
 
 pub async fn show(Path(id): Path<Uuid>, State(AppState {db, templates}): State<AppState>) -> Html<String> {}
 ```
-
-# Lifetime
 
 1. from [Common Rust Lifetime Misconceptions](https://github.com/pretzelhammer/rust-blog/blob/master/posts/common-rust-lifetime-misconceptions.md)
     - `T` only contains owned types ❌
