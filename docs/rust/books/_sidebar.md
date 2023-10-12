@@ -1,0 +1,1 @@
+- [Rust for Rustaceans](rust/books/rust_for_rustaceans.md)
