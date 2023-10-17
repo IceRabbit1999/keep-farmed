@@ -85,9 +85,21 @@ Wide pointer, aka Fat pointer, is twice the size of a `usize`: one `usize` for h
 
 - `trait<T> Foo` vs `trait Foo { type Bar }` : use an associated type if you expert only one implementation of the trait for a given type
 
-# Designing Interfaces
+# Error Handling
 
-Your interfaces should be unsurprising, flexible, obvious, constrained
+## Representing Errors
 
-## Unsurprising
+### Enumeration
+
+
+
+
+
+
+
+
+
+
+
+
 
