@@ -14,7 +14,47 @@ Documenting the annoying problems in learning rust, and convincing people I'm go
 
 
 ## Make the borrower checker happy 😉
+Attention: These solutions may not be the best practices!!! It just simply make my code compile
+### Error[E0521]: borrowed data escapes outside of function
+1. use `&str` in `'static` lifetime restriction
+```rust
+fn test(a: &str) {
+    println!("{}", a);
+    thread::spawn(move || {
+        println!("{}", a)
+    });
+}
+```
 
+error message:l
+```shell
+error[E0521]: borrowed data escapes outside of function
+  --> src/main.rs:10:5
+   |
+7  |   fn test(a: &str) {
+   |           -  - let's call the lifetime of this reference `'1`
+   |           |
+   |           `a` is a reference that is only valid in the function body
+...
+10 | /     thread::spawn(move || {
+11 | |         println!("{}", a)
+12 | |     });
+   | |      ^
+   | |      |
+   | |______`a` escapes the function body here
+   |        argument requires that `'1` must outlive `'static`
+```
+simple solution:
+```rust
+fn test(a: &str) {
+    println!("{}", a);
+    // make borrow checker happy
+    let a = a.to_string();
+    thread::spawn(move || {
+        println!("{}", a)
+    });
+}
+```
 ## In Books
 
 1. `affine typing`
