@@ -133,3 +133,84 @@ pub async fn show(Path(id): Path<Uuid>, State(AppState {db, templates}): State<A
 - rayon::join()
   - add `join` wherever parallelism is possible
   - let the library decide when it is profitable(how many threads to use)
+
+# Rust itself
+
+## Cursed Rust: Printing Things The Wrong Way
+[source](https://endler.dev/2023/cursed-rust/)
+Ways to print `Hello, world`
+1. Desugaring `println!`: `write!(std::io::lock(), "Hello, world!")`
+2. Iterating over characters: `"Hello, world!".chars().map(|c| print!("{c}))`
+3. Impl `Display`:
+```rust
+struct HelloWorld;
+
+impl std::fmt::Display for HelloWorld {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Hello, world!")
+    }
+}
+
+println!("{HelloWorld}");
+```
+4. Build your own `Display`
+```rust
+trait Println {
+    fn println(&self);
+}
+
+impl Println for &str {
+    fn println(&self) {
+        print!("{}", self);
+    }
+}
+
+"Hello, world!".println();
+``` 
+5. panic!: `panic!("Hello, world!);`
+6. Closures: `(|s: &str| print!("{s}"))("hello"); // call a closure directly after its definition`
+7. C style:
+```rust
+extern crate libc;
+use libc::{c_char, c_int};
+use core::ffi::CStr;
+
+extern "C" {
+    fn printf(fmt: *const c_char, ...) -> c_int;
+}
+
+fn main() {
+    const HI: &CStr = match CStr::from_bytes_until_nul(b"hello\n\0") {
+        Ok(x) => x,
+        Err(_) => panic!(),
+    };
+
+    unsafe {
+        printf(HI.as_ptr());
+    }
+}
+```
+8. C++ style of course
+9. Threads:
+```rust
+fn main() {
+    let phrase = "hello world";
+    let phrase = Arc::new(Mutex::new(phrase.chars().collect::<Vec<_>>()));
+
+    let mut handles = vec![];
+
+    for i in 0..phrase.lock().unwrap().len() {
+        let phrase = Arc::clone(&phrase);
+        let handle = thread::spawn(move || {
+            thread::sleep(Duration::from_millis(((i + 1) * 100) as u64));
+            print!("{}", phrase.lock().unwrap()[i]);
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+    println!();
+}
+```

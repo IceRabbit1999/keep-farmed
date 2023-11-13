@@ -16,6 +16,18 @@ pub struct Account {
 计算快、安全性高、生成的签名内容小的不对称加密算法
 
 # Transaction
+Every transaction contains:
+- an array of all accounts it intends to read or write
+- one or more instruction
+- a recent blockhash
+- one or more signatures
+
+Basic Flow
+1. Applications send transactions to an RPC client
+2. RPC client forwards transactions to the network
+3. Validators execute transactions, which invoke programs
+4. Programs update account state
+
 ```rust
 pub struct Message {
     pub header: MessageHeader,
@@ -37,7 +49,12 @@ pub struct VersionedTransaction {
     pub message: VersionedMessage
 }
 ```
-# Transaction Instruction
+# Instruction
+Every instruction is made up of 3 components:
+- the intended programs'ID
+- an array of all accounts's involved
+- a byte buffer of instruction data
+
 ```rust
 pub struct CompiledInstruction {
     pub program_id_index: u8,
@@ -45,6 +62,21 @@ pub struct CompiledInstruction {
     pub data: Vec<u8>
 }
 ```
+
+# PDA(Program Derived Address)
+- Program store data in PDAs
+- PDAs have no secret key
+- think of PDAs as kv store: k for address, v for the data inside the account
+
+# SPL-Token
+represent all non-native tokens on the Solana Network(Both fungible and non-fungible tokens)
+
+SPL is for Solana Program Library
+
+# Program
+- Programs on solana are a particular type of account that stores and executes instruction logic
+- Solana Programs have a single entry point
+- A program processes an instruction using the `program_id`, list of `accounts`, and `instruction_data` 
 # Contract
 ## System(Native) Program
 系统合约是由节点在部署的时候生成的，普通用户无法更新，他们像普通合约一样，可以被其他合约或者RPC进行调用
