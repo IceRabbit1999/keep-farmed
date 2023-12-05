@@ -1,4 +1,22 @@
 # Crust of Rust
+
+## Async/Await
+- yield until something happens
+- every await is a opportunity for whoever is above you to choose to do something else
+- if you don't await it, it doesn't get to do anything. awaiting is what drives its progress
+- a way to do cancellation
+- async just describes the mechanisms for changing or for cooperatively scheduling a bunch of computation by describing when under what circumstances code can make progress and under what circumstances code can yield
+- you are only allowed to await in async functions and async blocks
+- top-level future that describes the entire control flow of your application, something has to like run that in a loop. `main()` can't yield because there's noting above
+- the executor crate(tokio) provides both the lowest level resources(network, sockets, timers) and also the executor loop at the top and the two are sort of wired up together behind the scenes
+- cooperatively scheduled which means other things get to run as long as the thing that's running occasionally yields. so if you have a future which uses something like `std::io`, `std::net`, that thread is block, and now non of your futures get to make any progress, they're never polled again
+- the way that you can introduce parallelism not just concurrency is `tokio::spawn()`
+- introduce parallelism into asynchronous programs is you need to communicate the futures that can run in parallel to the executor
+- `fn foo() -> impl Future<Output = ()>`: the `impl Future<Output = ()>` as actually a kind of **StateMachine**
+- the StateMachine can become very large because it will hold all "stateful" variables... in all futures, the solution is to use `Box`, and that's also a reason to use `tokio::spawn` 
+- why can't `async trait`: the type of the "thing" that async trait produces isn't known and written anywhere, the size of it is depends on the implementation. (the size of the StateMachine)
+- you can use a `std::sync::Mutex` as long as your critical section is short and not contain any await points and yield points
+
 ## [Smart Pointers and Interior Mutability](https://www.youtube.com/watch?v=8O0Nt9qY_vo)
 ### Cell
 - `Cell` type allows you to modify a value through a shared reference because:
@@ -7,7 +25,8 @@
 
 ### RefCell
 
-## [Send, Sync and their implementors](https://www.youtube.com/watch?v=yOezcP-XaIw&list=PLqbS7AVVErFiWDOAVrPt7aYmnuuOLYvOa&index=14)
+## Async/Await
+
 
 # Lifetime
 
@@ -117,6 +136,21 @@ pub async fn show(Path(id): Path<Uuid>, State(AppState {db, templates}): State<A
   - An efficient way to keep track all of our active connections, and somehow get notified when they become ready. On Linux, it's called **epoll**  
 3. `Pin`: You can only create a `Pin<&mut T>` if you guarantee that the T will stay in stable location until it is dropped, meaning that any self-references will remain valid
 # Popular Crates
+
+## Axum
+source: Decrusting axum
+- How Router works?
+  - A `service` that takes a request and returns a response
+- How your random functions implement `Handler`?
+  - The `Handler` trait is automatically implemented for a lot of types. magic macro: `impl_handler`, `all_the_tuples`
+  - A function is automatically implemented Handler if:
+    - The last function parameter implements `FromRequest` and the other function parameters implement `FromRequestParts`
+    - The function matches: `FnOnce(T1, T2 ...) -> Fut + ... where Fut: Future<Output=Res> where Res: IntoResponse`
+- Why the last argument implement `FromRequest`
+  - the last argument consumes the body
+- The moment you provide the state to a `Handler`, it turns into a `Service`
+
+
 ## [Decrusting the serde crate](https://www.youtube.com/watch?v=BI_bHCGRgMY)
 - basically model:  `data type --> serde data model <-- data format`
 - basically steps for serialize: 

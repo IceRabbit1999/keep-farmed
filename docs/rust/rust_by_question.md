@@ -14,7 +14,7 @@ Documenting the annoying problems in learning rust, and convincing people I'm go
 
 
 ## Make the borrower checker happy 😉
-Attention: These solutions may not be the best practices!!! It just simply make my code compile
+Attention: These solutions may not be the best practices!!! It just simply make my code compile 
 ### Error[E0521]: borrowed data escapes outside of function
 1. use `&str` in `'static` lifetime restriction
 ```rust
