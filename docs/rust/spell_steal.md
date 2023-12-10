@@ -25,9 +25,6 @@
 
 ### RefCell
 
-## Async/Await
-
-
 # Lifetime
 
 - [Understanding Lifetime in Rust](https://mobiarch.wordpress.com/2015/06/29/understanding-lifetime-in-rust-part-i/)
