@@ -17,6 +17,14 @@
 - why can't `async trait`: the type of the "thing" that async trait produces isn't known and written anywhere, the size of it is depends on the implementation. (the size of the StateMachine)
 - you can use a `std::sync::Mutex` as long as your critical section is short and not contain any await points and yield points
 
+## Smart Pointers and Interior Mutability
+source: https://www.youtube.com/watch?v=8O0Nt9qY_vo
+- there is no way with cell for you to get a reference to what's inside the cell, and so it's always safe to mutate it
+- `Cell` does not implement `Sync`: if you have a reference to a cell, you can not give away that reference to a different thread
+- `UnsafeCell` lists itself as the core primitive for interior mutability in rust
+- `RefCell` lets you check at runtime whether anyone else is mutating
+
+
 ## [Smart Pointers and Interior Mutability](https://www.youtube.com/watch?v=8O0Nt9qY_vo)
 ### Cell
 - `Cell` type allows you to modify a value through a shared reference because:
@@ -167,7 +175,7 @@ source: Decrusting axum
 
 # Rust itself
 
-## Cursed Rust: Printing Things The Wrong Way
+## Printing Things The Wrong Way
 [source](https://endler.dev/2023/cursed-rust/)
 Ways to print `Hello, world`
 1. Desugaring `println!`: `write!(std::io::lock(), "Hello, world!")`
@@ -245,3 +253,58 @@ fn main() {
     println!();
 }
 ```
+# Language Level
+
+## Rust Is Beyond Object-Oriented
+source: https://www.thecodedmessage.com/posts/
+### Encapsulation
+- class-based encapsulation is not some special insight of OOP, but a specialized - or rather, tightly restricted form of module
+- in most cases, `getter` and `setter` is unnecessary because it is not raw field accessing(a network call or something else), it is just simple records. In other words: I should hope `foo.bar = 3` would never make a network call
+- in reality, `get` and `set` functions are only used as wrappers to satisfy the constraints of object-oriented ideology
+### Polymorphism
+- in OOP, polymorphism tries to take all decision-making in a common narrow mechanism: runtime polymorphism, and here are some constrains
+  - indirection: dereferencing the object reference, dereferencing the class pointer/vtable pointer, doing the indirect function call
+  - the call is indirect means that inlining is impossible
+  - it is polymorphic in one parameter only
+  - each value is independently polymorphic
+  - entangled with other OOP features
+- having a mechanism of vtable-based runtime polymorphism isn't a bad thing
+- 4 alternatives in Rust that can be used when OOP uses runtime polymorphism
+  - enum
+    ```
+    // Java
+    class UserId {
+        // ...
+        public abstract bool isAdministrator();
+    }
+
+    class Username extends UserId {
+        // ...
+        public bool isAdministrator() {
+            return username.startsWith("admin_");
+        }
+    }
+
+    class AnonymousUser extends UserId {
+        // ...
+        public bool isAdminstrator() {
+            return false;
+        }
+    }
+    // Rust
+    fn is_administrator(user: &UserId) -> bool {
+      match user {
+          UserId::Username(name) => name.starts_with("admin_"),
+          UserId::AnonymousUser(_) => false,
+      }
+    }
+    ```
+  - closures: an OOP interface or polymorphic decision only involves one actual operation, in such a situation, a closure ca just be used instead
+    - if you find yourself writing a trait with exactly one method, consider whether you should instead be using some sort of closure or lambda type
+  - polymorphism with traits
+  - dynamic trait objects: you have a closed set of operations that can be performed on a value, but what those operations actually do will change dynamically in a way that cannot be bounded ahead of time
+### Inheritance
+- some parent classes have fields, and that's when inheritance really starts to have problems
+- if you have both fields and virtual methods you have true OOP-style inheritance, with all of its problems
+- it is like in order to implement a trait, your type must have certain fields
+- rather than conflate the concepts of record types, modules, and traits in this God-concept of "class", Rust keeps these three concepts quite separate
