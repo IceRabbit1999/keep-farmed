@@ -17,6 +17,19 @@
 - why can't `async trait`: the type of the "thing" that async trait produces isn't known and written anywhere, the size of it is depends on the implementation. (the size of the StateMachine)
 - you can use a `std::sync::Mutex` as long as your critical section is short and not contain any await points and yield points
 
+## Lifetime Annotations
+source: https://www.youtube.com/watch?v=rAl-9HwD858&t=3061s
+- if you have any lifetime you can assign to it anything of the same type but a longer lifetime
+
+## Decrusting the tracing crate
+source: https://www.youtube.com/watch?v=21rtHinFA40
+- the application side which is emits events, subscriber side which is the thing that receives or acts upon events
+- a span is essentially a sort of logical grouping of related events
+
+## Iterators
+source: https://www.youtube.com/watch?v=yozQ9C69pNs&t=3237s
+
+
 ## Smart Pointers and Interior Mutability
 source: https://www.youtube.com/watch?v=8O0Nt9qY_vo
 - there is no way with cell for you to get a reference to what's inside the cell, and so it's always safe to mutate it
@@ -35,8 +48,15 @@ source: https://www.youtube.com/watch?v=8O0Nt9qY_vo
 
 # Lifetime
 
-- [Understanding Lifetime in Rust](https://mobiarch.wordpress.com/2015/06/29/understanding-lifetime-in-rust-part-i/)
-  - Lifetime solved two nagging problems: Memory management and Race condition
+## RustLifetimes
+source: https://www.youtube.com/watch?v=1QoT9fmPYr8
+
+- lifetimes enforce a piece of memory is still valid for a reference
+- lifetimes are really about insuring memory does not get cleaned up before a reference can use it
+- rust uses the minimum of the passed in lifetimes
+- 
+
+
 # Framework
 
 ## [Dependency Injection In Axum](https://tulipemoutarde.be/posts/2023-08-20-depencency-injection-rust-axum/)
@@ -175,6 +195,67 @@ source: Decrusting axum
 
 # Rust itself
 
+## The What and How of Futures and async/await in Rust
+source: https://www.youtube.com/watch?v=9_3krAQtD2k&t=4s
+
+- lazy of future: just describing the steps that it's going to go through, and this is where the notion of an executor comes in
+- executor is basically something that you can give futures to and it will make sure that they get done
+- if Pending is returned, it must has arranged for yourself to be woken up again when you can make progress
+- the tricky part is to find some way to have these tasks be notified
+- futures define sort of general principles for or the general interface for how to deal with asynchronous computation like tasks and notifiers and wake up and executors, it only define the interfaces
+- tokio on the other hand is an implementation of both an executor and sort of the other infrastructure that you need in order to make things wake up
+- where tokio shines is it also gives you the thing that is going to wake you up: reactor
+- reactor/epoll persuade code
+```rust
+enum Operation {
+  Read,
+  Write
+}
+// may not in another thread
+fn reactor_thread(notify_me: mpsc::Receiver<(Task, FD, Operation)>) {
+  let waiting_for = HashMap<(FD, Operation), Task>;
+  loop {
+    while let Some((task, fd, op)) = notify_me.try_recv() {
+      waiting_for.insert((fd, op), task);
+    }
+    let select = waiting_for.keys.collect();
+    for (fd, op) in epoll(select) {
+      waiting_for.remove((fd, op), task).notify();
+    }
+  }
+}
+```
+- persuade code on Pending
+```rust
+struct Foo {
+  fd: std::net::TcpStream
+}
+impl Future for Foo {
+  fn poll(&mut self) -> Result<(Poll, Error)> {
+    loop {
+      match self.fd.read() {
+      Ok(r) => {
+        // read success
+      },
+      Err(io::Error::WouldBlock) => {
+        // must do something to make sure we are woken up!
+        let reactor = Handle::current();
+        // use epoll actually
+        reactor.register(self.fd, Operation::Read, task::current());
+        return Ok(Pending)
+      },
+      Err(io::Error::Closed) => {
+        return Ok(Ready)
+      },
+      Err(e) => {}
+    }
+    }
+  }
+}
+```
+- tokio runtime is basically a thing that provides you with a reactor, an executor and a timer
+- if you have tons of futures and they're all ready, you basically need to find the right way to switch between dealing with the futures and driving the reactor or driving the timer
+- 
 ## Printing Things The Wrong Way
 [source](https://endler.dev/2023/cursed-rust/)
 Ways to print `Hello, world`

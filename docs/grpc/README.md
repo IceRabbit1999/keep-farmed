@@ -1,0 +1,9 @@
+- a modern open source high performance Remote Procedure Call framework
+- based around the idea of defining a service, specifying the methods that can be called remotely with their parameters and return types
+  - server: implements this interface and runs a gRPC server to handle client calls
+  - client: a stub that provides the same methods as the server
+- four kinds of service method
+  - Unary RPCs: single request, single response `rpc SayHello(HelloRequest) returns (HelloResponse)`
+  - Server streaming RPCs: send a request, get a stream to read a sequence o messages back. client reads from the stream until there are no more messages. gRPC will guarantee message ordering `rpc LotsOfReplies(HelloRequest) returns (stream HelloResponse)`
+  - client streaming RPCs: just like server stream but the stream is on client side. `rpc LotsOfGreetings(stream HelloRequest) returns (HelloResponse)`
+  - Bidirectional stream RPCs: both sides send a sequence of messages using a read-write stream(operate independently), client and server can read read/write in whatever order they like. `rpc BidiHello(stream HelloRequest) returns (stream HelloResponse)`
